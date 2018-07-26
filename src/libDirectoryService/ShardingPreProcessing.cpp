@@ -48,6 +48,17 @@ bool DirectoryService::RunConsensusOnShardingWhenDSPrimary()
     // Send just a dummy byte now
     vector<unsigned char> sharding_structure = {0};
 
+    // kill first ds leader (used for view change testing)
+    /**
+    if (m_consensusMyID == 0 && m_viewChangeCounter < 1)
+    {
+        LOG_GENERAL(INFO, "I am killing/suspending myself to test view change");
+        // throw exception();
+        return false;
+    }
+    **/
+    // Create new consensus object
+
     // Dummy values for now
     uint32_t consensusID = 0x0;
     m_consensusBlockHash.resize(BLOCK_HASH_SIZE);
