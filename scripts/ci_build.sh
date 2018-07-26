@@ -27,6 +27,7 @@ esac
 echo "n_parallel=${n_parallel}"
 
 echo "ccache configuration"
+ccache --version
 ccache -p
 
 echo "ccache status"
