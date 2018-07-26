@@ -30,6 +30,7 @@ echo "ccache configuration"
 ccache --version
 ccache -p
 
+ccache -z
 echo "ccache status"
 ccache -s
 
