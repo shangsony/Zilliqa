@@ -173,31 +173,34 @@ void DirectoryService::RunConsensusOnSharding()
         return;
     }
 
+    // Upon consensus object creation failure, one should not return from the function, but rather wait for view change.
+    bool ConsensusObjCreation = true;
     if (m_mode == PRIMARY_DS)
     {
-        if (!RunConsensusOnShardingWhenDSPrimary())
+        ConsensusObjCreation = RunConsensusOnShardingWhenDSPrimary();
+        if (!ConsensusObjCreation)
         {
             LOG_EPOCH(WARNING, to_string(m_mediator.m_currentEpochNum).c_str(),
                       "Error encountered with running sharding consensus "
                       "as ds leader");
-            // throw exception();
-            return;
         }
     }
     else
     {
-        if (!RunConsensusOnShardingWhenDSBackup())
+        ConsensusObjCreation = RunConsensusOnShardingWhenDSBackup();
+        if (!ConsensusObjCreation)
         {
             LOG_EPOCH(INFO, to_string(m_mediator.m_currentEpochNum).c_str(),
                       "Error encountered with running sharding consensus "
                       "as ds backup")
-            // throw exception();
-            return;
         }
     }
 
-    SetState(SHARDING_CONSENSUS);
-    cv_shardingConsensusObject.notify_all();
+    if (ConsensusObjCreation)
+    {
+        SetState(SHARDING_CONSENSUS);
+        cv_shardingConsensusObject.notify_all();
+    }
 
     // View change will wait for timeout. If conditional variable is notified before timeout, the thread will return
     // without triggering view change.
