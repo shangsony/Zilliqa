@@ -291,6 +291,7 @@ class DirectoryService : public Executable, public Broadcastable
                                     unsigned int offset, const Peer& from);
 
     // View change
+    void SetLastKnownGoodState();
     void RunConsensusOnViewChange();
     void ScheduleViewChangeTimeout();
     void ComputeNewCandidateLeader();
