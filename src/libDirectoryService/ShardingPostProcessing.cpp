@@ -178,8 +178,8 @@ bool DirectoryService::ProcessShardingConsensus(
     {
         lock_guard<mutex> g(m_mutexConsensus);
         // Wait until in the case that primary sent announcement pretty early
-        if ((m_state == POW2_SUBMISSION)
-            || (m_state == SHARDING_CONSENSUS_PREP) || (m_state == VIEWCHANGE_CONSENSUS))
+        if ((m_state == POW2_SUBMISSION) || (m_state == SHARDING_CONSENSUS_PREP)
+            || (m_state == VIEWCHANGE_CONSENSUS))
         {
             cv_shardingConsensus.notify_all();
 
