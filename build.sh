@@ -15,6 +15,6 @@
 
 dir=build
 
-cmake -H. -B${dir} -DCMAKE_BUILD_TYPE=RelWithDebInfo -DTESTS=ON -DCMAKE_INSTALL_PREFIX=..
+cmake -H. -B${dir} -DCMAKE_BUILD_TYPE=RelWithDebInfo -DTESTS=ON -DENABLE_COVERAGE=ON -DCMAKE_INSTALL_PREFIX=..
 cmake --build ${dir} -- -j4
 cmake --build ${dir} --target clang-format-fix
