@@ -34,6 +34,8 @@ ccache -z
 echo "ccache status"
 ccache -s
 
+export CCACHE_LOGFILE=/tmp/ccache.log
+
 # assume that it is run from project root directory
 mkdir build && cd build
 cmake ${CMAKE_EXTRA_OPTIONS} -DCMAKE_BUILD_TYPE=RelWithDebInfo -DTESTS=ON ..
@@ -47,3 +49,6 @@ ctest --output-on-failure -j${n_parallel}
 
 echo "ccache status"
 ccache -s
+
+echo "ccache log"
+cat /tmp/ccache.log
